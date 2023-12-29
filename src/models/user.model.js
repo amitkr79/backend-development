@@ -51,7 +51,7 @@ const userSchema = new Schema(
     }
 ,{timestamps: true})
 
-userSchema.plugin.pre("save" , async function (next) {
+userSchema.pre("save" , async function (next) {
     if(!this.isModified("password")) return next(); // agar password modified hua tab encryptiion dalo again se ny to nikal jao yahi 
 
     this.password = await bcrypt.hash(this.password,10)
