@@ -54,7 +54,7 @@ const userSchema = new Schema(
 userSchema.plugin.pre("save" , async function (next) {
     if(!this.isModified("password")) return next(); // agar password modified hua tab encryptiion dalo again se ny to nikal jao yahi 
 
-    this.password = bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password,10)
     next()
 })
 
@@ -77,6 +77,7 @@ userSchema.methods.generateAccessToken = function(){
         }
     )
 }
+
 userSchema.methods.generateRefreshToken = function(){
     return Jwt.sign(
         {
